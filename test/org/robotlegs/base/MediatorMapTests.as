@@ -279,5 +279,25 @@ package org.robotlegs.base
 			contextView.addChild(viewComponent);
 			Assert.assertTrue('Mediator should have been created for View Component', mediatorMap.hasMediatorForView(viewComponent));
 		}
+
+		[Test]
+		public function autoCreateMediatorByPassInstanceInsteadOfClassOrClassname():void
+		{
+			var viewComponent:ViewComponent = new ViewComponent();
+
+			mediatorMap.mapView(viewComponent, ViewMediator, null, false);
+			Assert.assertFalse('Mediator should NOT have been created for View Component', mediatorMap.hasMediatorForView(viewComponent));
+
+			mediatorMap.unmapView(ViewComponent);
+
+			mediatorMap.mapView(viewComponent, ViewMediator, null, false);
+			mediatorMap.createMediator(viewComponent);
+			Assert.assertTrue('Mediator should have been created for View Component', mediatorMap.hasMediatorForView(viewComponent));
+
+			mediatorMap.unmapView(ViewComponent);
+
+			mediatorMap.mapView(viewComponent, ViewMediator);
+			Assert.assertTrue('Mediator should have been created for View Component', mediatorMap.hasMediatorForView(viewComponent));
+		}
 	}
 }

@@ -120,6 +120,12 @@ package org.robotlegs.base
 			{
 				config.typedViewClasses = [viewClassOrName];
 			}
+			else
+			{
+				 var viewClass:Class = reflector.getClass(viewClassOrName);
+				 if (viewClass)
+					config.typedViewClasses = [viewClass];
+			}
 			mappingConfigByViewClassName[viewClassName] = config;
 			
 			if (autoCreate || autoRemove)
@@ -132,6 +138,8 @@ package org.robotlegs.base
 			// This was a bad idea - causes unexpected eager instantiation of object graph 
 			if (autoCreate && contextView && (viewClassName == getQualifiedClassName(contextView) ))
 				createMediatorUsing(contextView, viewClassName, config);
+			else if (autoCreate && viewClass && viewClassOrName is viewClass)
+				createMediator(viewClassOrName);
 		}
 		
 		/**
