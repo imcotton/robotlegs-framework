@@ -281,7 +281,7 @@ package org.robotlegs.base
 		}
 
 		[Test]
-		public function autoCreateMediatorByPassInstanceInsteadOfClassOrClassname():void
+		public function autoCreateMediatorByPassInstanceBesidesClassOrClassname():void
 		{
 			var viewComponent:ViewComponent = new ViewComponent();
 
