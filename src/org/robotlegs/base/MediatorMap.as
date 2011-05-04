@@ -99,7 +99,7 @@ package org.robotlegs.base
 			if (mappingConfigByViewClassName[viewClassName] != null)
 			{
 				if (!!(viewClass = reflector.getClass(viewClassOrName)) && viewClassOrName is viewClass)
-					createMediator(viewClassOrName);
+					createMediatorUsing(viewClassOrName, viewClassName);
 				else
 					throw new ContextError(ContextError.E_MEDIATORMAP_OVR + ' - ' + mediatorClass);
 			}
