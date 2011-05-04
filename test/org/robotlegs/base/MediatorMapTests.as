@@ -295,8 +295,16 @@ package org.robotlegs.base
 			Assert.assertTrue('Mediator should have been created for View Component', mediatorMap.hasMediatorForView(viewComponent));
 
 			mediatorMap.unmapView(ViewComponent);
+			mediatorMap.removeMediatorByView(viewComponent);
 
 			mediatorMap.mapView(viewComponent, ViewMediator);
+			Assert.assertTrue('Mediator should have been created for View Component', mediatorMap.hasMediatorForView(viewComponent));
+
+			mediatorMap.unmapView(ViewComponent);
+			mediatorMap.removeMediatorByView(viewComponent);
+
+			mediatorMap.mapView(viewComponent, ViewMediator, ViewComponent, false);
+			mediatorMap.createMediator(viewComponent);
 			Assert.assertTrue('Mediator should have been created for View Component', mediatorMap.hasMediatorForView(viewComponent));
 		}
 	}
