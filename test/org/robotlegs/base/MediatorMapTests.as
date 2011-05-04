@@ -306,6 +306,21 @@ package org.robotlegs.base
 			mediatorMap.mapView(viewComponent, ViewMediator, ViewComponent, false);
 			mediatorMap.createMediator(viewComponent);
 			Assert.assertTrue('Mediator should have been created for View Component', mediatorMap.hasMediatorForView(viewComponent));
+
+			mediatorMap.unmapView(ViewComponent);
+			mediatorMap.removeMediatorByView(viewComponent);
+
+			mediatorMap.mapView(viewComponent, ViewMediator);
+			mediatorMap.mapView(new ViewComponent(), ViewMediator);
+			Assert.assertTrue('Mediator should have been created for each instance of View Component', mediatorMap.hasMediatorForView(viewComponent));
 		}
+
+		[Test(expects="org.robotlegs.base.ContextError")]
+		public function mapExistingViewClassToMediatorMoreThanOnceShouldFail():void
+		{
+			mediatorMap.mapView(ViewComponent, ViewMediator);
+			mediatorMap.mapView(ViewComponent, ViewMediator);
+		}
+
 	}
 }

@@ -93,10 +93,16 @@ package org.robotlegs.base
 		 */
 		public function mapView(viewClassOrName:*, mediatorClass:Class, injectViewAs:* = null, autoCreate:Boolean = true, autoRemove:Boolean = true):void
 		{
+			var viewClass:Class;
 			var viewClassName:String = reflector.getFQCN(viewClassOrName);
 			
 			if (mappingConfigByViewClassName[viewClassName] != null)
-				throw new ContextError(ContextError.E_MEDIATORMAP_OVR + ' - ' + mediatorClass);
+			{
+				if (!!(viewClass = reflector.getClass(viewClassOrName)) && viewClassOrName is viewClass)
+					createMediator(viewClassOrName);
+				else
+					throw new ContextError(ContextError.E_MEDIATORMAP_OVR + ' - ' + mediatorClass);
+			}
 			
 			if (reflector.classExtendsOrImplements(mediatorClass, IMediator) == false)
 				throw new ContextError(ContextError.E_MEDIATORMAP_NOIMPL + ' - ' + mediatorClass);
@@ -122,8 +128,7 @@ package org.robotlegs.base
 			}
 			else
 			{
-				 var viewClass:Class = reflector.getClass(viewClassOrName);
-				 if (viewClass)
+				if (!!(viewClass = reflector.getClass(viewClassOrName)))
 					config.typedViewClasses = [viewClass];
 			}
 			mappingConfigByViewClassName[viewClassName] = config;
